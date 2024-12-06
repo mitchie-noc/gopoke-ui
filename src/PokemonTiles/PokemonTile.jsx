@@ -22,7 +22,10 @@ export default function PokemonTile({ name, sprite, types }) {
 
   const baseTypeClass = "font-mono text-3m text-center p-1 w-full font-bold ";
   let pokemonType = types.map((type) => (
-    <p className={baseTypeClass + colorMap[type.Name] || "bg-slat-50"}>
+    <p
+      className={baseTypeClass + colorMap[type.Name] || "bg-slat-50"}
+      key={type.Name}
+    >
       {type.Name.toUpperCase()}
     </p>
   ));
