@@ -59,9 +59,6 @@ function App() {
 
   return (
     <>
-      {activePokemon.length > 0 ? (
-        <ActivePokemon pokemon={activePokemon} />
-      ) : null}
       <div className="bg-cyan-100 flex flex-col text-slate-50">
         <div className="bg-cyan-900 flex justify-center">
           <h1 className="text-3xl font-bold underline center">PokeGo!</h1>
@@ -69,11 +66,21 @@ function App() {
         <div className="bg-cyan-900 flex justify-center text-slate-50">
           <h1 className="text-lg font-bold center">TODO: Nav bar</h1>
         </div>
+
         <SearchBar
           onSearch={handleOnSearch}
           onSelect={handleOnSelect}
           items={pokemonResources}
         />
+
+        {activePokemon.length > 0 ? (
+          <ActivePokemon pokemon={activePokemon} />
+        ) : null}
+
+        {activePokemon.length > 0 ? (
+          <ActivePokemon pokemon={activePokemon} />
+        ) : null}
+
         <PokemonTiles pokemon={pokemon} />
       </div>
     </>

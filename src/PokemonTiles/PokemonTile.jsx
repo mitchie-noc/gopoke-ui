@@ -31,7 +31,7 @@ export default function PokemonTile({ name, sprite, types }) {
   ));
 
   return (
-    <div className="border border-solid border-2 border-slate-50 rounded-md mx-3 flex flex-col basis-1/3 sm:basis-1/6 items-center justify-between w-100 m-3 flex-1 bg-cyan-100">
+    <div className="border border-solid border-2 border-slate-50 rounded-md mx-3 flex flex-col basis-1/3 sm:basis-1/6 items-center justify-between w-36 m-3 flex-1 bg-cyan-100">
       <div className=" rounded-t-md bg-slate-800 w-full">
         <p className="font-mono font-bold text-3l text-center p-2 text-slate-50">
           {name.toUpperCase()}
