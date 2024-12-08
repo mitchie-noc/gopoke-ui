@@ -2,10 +2,29 @@ import React from "react";
 import Chart from "react-apexcharts";
 import calculateStat from "../Util/Utils";
 
-export default function StatRadar({ statLables, statBase, statValues }) {
-  const series1Data = statBase.map((stat) =>
-    calculateStat(stat, 31, 252, 100, 1.1)
+export default function StatRadar({
+  stats,
+  pokemonStatTraining,
+  pokemonLevel,
+}) {
+  const statLables = stats.map((stat) =>
+    stat.Name.replace("special-", "Sp.").replace("defense", "def")
   );
+
+  const statValues = stats.map((stat) => {
+    const training = pokemonStatTraining.find((t) => t.name === stat.Name);
+    const iv = training ? training.iv : 0; // Default to 0 if not found
+    const ev = training ? training.ev : 0; // Default to 0 if not found
+    const isHP = stat.Name.toLowerCase() === "hp"; // Check if it's HP
+    return calculateStat(stat.Base, iv, ev, pokemonLevel, 1.0, isHP);
+  });
+
+  const series1Data = stats.map((stat) => {
+    const levelScale = pokemonLevel + 2;
+    const level = levelScale > 100 ? 100 : levelScale;
+    const isHP = stat.Name.toLowerCase() === "hp"; // Check if it's HP
+    return calculateStat(stat.Base, 31, 252, level, 1.1, isHP);
+  });
 
   const maxValue = Math.max(...series1Data); // Calculate the maximum value in series1Data
 
@@ -16,9 +35,29 @@ export default function StatRadar({ statLables, statBase, statValues }) {
         show: false,
         min: 0,
         max: maxValue,
+        tickAmount: 3,
+        labels: {
+          style: {
+            fontSize: "20px", // Increase the font size for axis labels
+            fontWeight: "bold", // Optional: Make the font weight bold
+          },
+        },
+      },
+      xaxis: {
+        categories: statLables, // Axis labels for the radar chart
+        labels: {
+          style: {
+            fontSize: "11px", // Increase font size
+          },
+        },
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: "14px", // Increase the font size of the values inside the radar chart
+          fontWeight: "bold", // Optionally, change the font weight
+          colors: ["#008FFB"], // Adjust text color if needed
+        },
       },
     },
     series: [
@@ -30,12 +69,14 @@ export default function StatRadar({ statLables, statBase, statValues }) {
   };
 
   return (
-    <Chart
-      options={x.options}
-      series={x.series}
-      type="radar"
-      height={400}
-      width={400}
-    />
+    <div className="">
+      <Chart
+        options={x.options}
+        series={x.series}
+        type="radar"
+        height={390}
+        width={400}
+      />
+    </div>
   );
 }

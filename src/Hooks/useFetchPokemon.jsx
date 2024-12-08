@@ -11,7 +11,6 @@ const useFetchPokemon = (offset, limit, initialResponse = null) => {
         let results = [];
 
         if (offset === null && limit === null && initialResponse === null) {
-          console.log("Doing nothing");
           setLoading(false);
           setData([]);
           return;
@@ -19,9 +18,7 @@ const useFetchPokemon = (offset, limit, initialResponse = null) => {
 
         if (initialResponse) {
           // Use initial response (no need to make the first HTTP request)
-          console.log("hit", initialResponse);
           results = initialResponse;
-          console.log(initialResponse);
         } else {
           const response = await fetch(
             `http://localhost:8080/api/v1/pokemon?offset=${offset}&limit=${limit}`
@@ -42,7 +39,9 @@ const useFetchPokemon = (offset, limit, initialResponse = null) => {
             if (!res.ok) {
               throw new Error(`Failed to fetch details for ${pokemon.name}`);
             }
-            return res.json();
+            const result = res.json();
+            result.id = pokemon.id;
+            return result;
           })
         );
 

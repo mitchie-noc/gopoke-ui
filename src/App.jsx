@@ -57,6 +57,15 @@ function App() {
     setActivePokemonResources([items]);
   };
 
+  const pokemonTileClicked = (event, name) => {
+    setActivePokemonResources([
+      {
+        id: name.id,
+        name: name.Name,
+      },
+    ]);
+  };
+
   return (
     <>
       <div className="bg-cyan-100 flex flex-col text-slate-50">
@@ -73,15 +82,18 @@ function App() {
           items={pokemonResources}
         />
 
-        {activePokemon.length > 0 ? (
+        {/* {activePokemon.length > 0 ? (
           <ActivePokemon pokemon={activePokemon} />
-        ) : null}
+        ) : null} */}
 
         {activePokemon.length > 0 ? (
           <ActivePokemon pokemon={activePokemon} />
         ) : null}
 
-        <PokemonTiles pokemon={pokemon} />
+        <PokemonTiles
+          pokemon={pokemon}
+          pokemonTileClicked={pokemonTileClicked}
+        />
       </div>
     </>
   );
