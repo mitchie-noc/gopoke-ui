@@ -1,6 +1,6 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import ActivePokemonSummary from "./ActivePokemonSummary";
-import PokemonStateView from "../Controls/PokemonStatView";
+import PokemonStatView from "../Controls/PokemonStatView";
 import "../index.css";
 
 export default function ActivePokemon({ pokemon }) {
@@ -55,7 +55,7 @@ export default function ActivePokemon({ pokemon }) {
       <ActivePokemonSummary pokemon={pok} />
 
       <div className="sm:w-2/3 w-full sm:mt-0 mt-4">
-        <PokemonStateView
+        <PokemonStatView
           level={pokemonLevel}
           pokemonLevel={pokemonLevel}
           stats={pok.Stats}

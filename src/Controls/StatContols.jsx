@@ -20,10 +20,14 @@ export default function StatControls({
       "p-2 border border-solid flex-1 text-center " + col + font;
     return (
       <div onClick={onStatClicked} className={baseClass} key={index}>
-        {stat.name}
+        <div>{stat.name}</div>
       </div>
     );
   });
+
+  const allocatedEvs = statTraining.reduce((sum, stat) => sum + stat.ev, 0);
+  const availableEvs = 510 - allocatedEvs;
+  const max = Math.min(252, activeStat.ev + availableEvs);
 
   return (
     <div className="">
@@ -41,7 +45,7 @@ export default function StatControls({
       <Slider
         aria-label="Default"
         valueLabelDisplay="auto"
-        max={252}
+        max={max}
         value={activeStat.ev || 0} // Always controlled
         onChangeCommitted={onBattleStatEvChange}
       />
