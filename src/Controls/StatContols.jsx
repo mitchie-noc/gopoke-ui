@@ -14,7 +14,7 @@ export default function StatControls({
   }; // Fallback to default values if no active stat
 
   const stats = statTraining.map((stat, index) => {
-    const col = stat.active ? "bg-sky-700 " : "bg-slate-600 ";
+    const col = stat.active ? "bg-sky-700 " : "bg-slate-900 ";
     const font = stat.active ? " font-bold" : "";
     const baseClass =
       "p-2 border border-solid flex-1 text-center " + col + font;

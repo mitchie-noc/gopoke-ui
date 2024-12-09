@@ -91,7 +91,7 @@ function App() {
         ) : null} */}
 
         {activePokemon.length > 0 ? (
-          <ActivePokemon pokemon={activePokemon} natures={natures} />
+          <ActivePokemon pok={activePokemon[0]} natures={natures} />
         ) : null}
 
         <PokemonTiles

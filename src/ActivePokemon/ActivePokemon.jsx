@@ -1,21 +1,28 @@
-import { React, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ActivePokemonSummary from "./ActivePokemonSummary";
 import PokemonStatView from "../Controls/PokemonStatView";
 import "../index.css";
 
-export default function ActivePokemon({ pokemon, natures }) {
+export default function ActivePokemon({ pok, natures }) {
   const [activeNature, setActiveNature] = useState({});
+  const [activeAbility, setActiveAbility] = useState({});
   const [pokemonLevel, setPokemonLevel] = useState(50);
-  const [pokemonStatTraining, setPokemonStatTraining] = useState([
-    { name: "hp", iv: 0, ev: 0, nature: 1.0, active: true },
-    { name: "attack", iv: 0, ev: 0, nature: 1.0, active: false },
-    { name: "defense", iv: 0, ev: 0, nature: 1.0, active: false },
-    { name: "speed", iv: 0, ev: 0, nature: 1.0, active: false },
-    { name: "special-defense", iv: 0, ev: 0, nature: 1.0, active: false },
-    { name: "special-attack", iv: 0, ev: 0, nature: 1.0, active: false },
-  ]);
+  const [pokemonStatTraining, setPokemonStatTraining] = useState([]);
 
-  const pok = pokemon[0];
+  // Initialize or reset state when 'pok' changes
+  useEffect(() => {
+    setPokemonStatTraining([
+      { name: "hp", iv: 0, ev: 0, nature: 1.0, active: true },
+      { name: "attack", iv: 0, ev: 0, nature: 1.0, active: false },
+      { name: "defense", iv: 0, ev: 0, nature: 1.0, active: false },
+      { name: "speed", iv: 0, ev: 0, nature: 1.0, active: false },
+      { name: "special-defense", iv: 0, ev: 0, nature: 1.0, active: false },
+      { name: "special-attack", iv: 0, ev: 0, nature: 1.0, active: false },
+    ]);
+    setActiveNature({});
+    setActiveAbility({});
+    setPokemonLevel(50);
+  }, [pok]); // This ensures the state resets whenever the 'pok' prop changes
 
   pok.Stats.sort((a, b) => {
     const customOrder = [
@@ -54,17 +61,24 @@ export default function ActivePokemon({ pokemon, natures }) {
   const onNatureSelected = (selectedNature) => {
     setActiveNature(selectedNature);
     setPokemonStatTraining((prevStats) => {
-      // Map to adjust nature values based on the selected nature
       return prevStats.map((stat) => {
         if (stat.name === selectedNature.Increased_Stat) {
-          return { ...stat, nature: 1.1 }; // Boosted stat
+          return { ...stat, nature: 1.1 };
         } else if (stat.name === selectedNature.Decreased_Stat) {
-          return { ...stat, nature: 0.9 }; // Reduced stat
+          return { ...stat, nature: 0.9 };
         } else {
-          return { ...stat, nature: 1.0 }; // Neutral for other stats
+          return { ...stat, nature: 1.0 };
         }
       });
     });
+  };
+
+  const onAbilitySelected = (x) => {
+    const activeAbility = pok.Abilities.find(
+      (ability) => ability.Name === x.value
+    );
+    console.log(activeAbility);
+    setActiveAbility(activeAbility);
   };
 
   return (
@@ -74,6 +88,8 @@ export default function ActivePokemon({ pokemon, natures }) {
         nature={activeNature}
         natures={natures}
         onNatureSelected={onNatureSelected}
+        onAbilitySelected={onAbilitySelected}
+        activeAbility={activeAbility}
       />
 
       <div className="sm:w-2/3 w-full sm:mt-0 mt-4">
