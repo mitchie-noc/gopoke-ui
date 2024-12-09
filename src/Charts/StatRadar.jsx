@@ -15,8 +15,9 @@ export default function StatRadar({
     const training = pokemonStatTraining.find((t) => t.name === stat.Name);
     const iv = training ? training.iv : 0; // Default to 0 if not found
     const ev = training ? training.ev : 0; // Default to 0 if not found
+    const nature = training ? training.nature : 0; // Default to 0 if not found
     const isHP = stat.Name.toLowerCase() === "hp"; // Check if it's HP
-    return calculateStat(stat.Base, iv, ev, pokemonLevel, 1.0, isHP);
+    return calculateStat(stat.Base, iv, ev, pokemonLevel, nature, isHP);
   });
 
   const series1Data = stats.map((stat) => {

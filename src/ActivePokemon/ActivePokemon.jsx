@@ -1,22 +1,23 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import ActivePokemonSummary from "./ActivePokemonSummary";
 import PokemonStatView from "../Controls/PokemonStatView";
 import "../index.css";
 
-export default function ActivePokemon({ pokemon }) {
+export default function ActivePokemon({ pokemon, natures }) {
+  const [activeNature, setActiveNature] = useState({});
   const [pokemonLevel, setPokemonLevel] = useState(50);
   const [pokemonStatTraining, setPokemonStatTraining] = useState([
-    { name: "hp", iv: 0, ev: 0, active: true },
-    { name: "attack", iv: 0, ev: 0, active: false },
-    { name: "defense", iv: 0, ev: 0, active: false },
-    { name: "speed", iv: 0, ev: 0, active: false },
-    { name: "special-defense", iv: 0, ev: 0, active: false },
-    { name: "special-attack", iv: 0, ev: 0, active: false },
+    { name: "hp", iv: 0, ev: 0, nature: 1.0, active: true },
+    { name: "attack", iv: 0, ev: 0, nature: 1.0, active: false },
+    { name: "defense", iv: 0, ev: 0, nature: 1.0, active: false },
+    { name: "speed", iv: 0, ev: 0, nature: 1.0, active: false },
+    { name: "special-defense", iv: 0, ev: 0, nature: 1.0, active: false },
+    { name: "special-attack", iv: 0, ev: 0, nature: 1.0, active: false },
   ]);
 
   const pok = pokemon[0];
 
-  const reorderedStats = pok.Stats.sort((a, b) => {
+  pok.Stats.sort((a, b) => {
     const customOrder = [
       "hp",
       "attack",
@@ -50,9 +51,30 @@ export default function ActivePokemon({ pokemon }) {
     );
   };
 
+  const onNatureSelected = (selectedNature) => {
+    setActiveNature(selectedNature);
+    setPokemonStatTraining((prevStats) => {
+      // Map to adjust nature values based on the selected nature
+      return prevStats.map((stat) => {
+        if (stat.name === selectedNature.Increased_Stat) {
+          return { ...stat, nature: 1.1 }; // Boosted stat
+        } else if (stat.name === selectedNature.Decreased_Stat) {
+          return { ...stat, nature: 0.9 }; // Reduced stat
+        } else {
+          return { ...stat, nature: 1.0 }; // Neutral for other stats
+        }
+      });
+    });
+  };
+
   return (
-    <div className="flex flex-col sm:flex-row sm:space-x-4 bg-gray-800 w-full p-5 sm:p-10">
-      <ActivePokemonSummary pokemon={pok} />
+    <div className="flex flex-col sm:flex-row sm:space-x-4 bg-slate-700 w-full p-5 sm:p-10">
+      <ActivePokemonSummary
+        pokemon={pok}
+        nature={activeNature}
+        natures={natures}
+        onNatureSelected={onNatureSelected}
+      />
 
       <div className="sm:w-2/3 w-full sm:mt-0 mt-4">
         <PokemonStatView
