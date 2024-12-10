@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useFetchPokemon from "./Hooks/useFetchPokemon";
+import useFetchData from "./Hooks/useFetchData";
 import PokemonTiles from "./PokemonTiles/PokemonTiles";
 import SearchBar from "./Search/SearchBar";
 import ActivePokemon from "./ActivePokemon/ActivePokemon";
@@ -19,6 +20,9 @@ function App() {
     null,
     null,
     activePokemonResource
+  );
+  const { data: natures, nl, ne } = useFetchData(
+    "http://localhost:8080/api/v1/nature"
   );
 
   const handleOnSearch = (term) => {
@@ -57,24 +61,43 @@ function App() {
     setActivePokemonResources([items]);
   };
 
+  const pokemonTileClicked = (event, name) => {
+    setActivePokemonResources([
+      {
+        id: name.id,
+        name: name.Name,
+      },
+    ]);
+  };
+
   return (
     <>
-      {activePokemon.length > 0 ? (
-        <ActivePokemon pokemon={activePokemon} />
-      ) : null}
-      <div className="bg-cyan-100 flex flex-col text-slate-50">
-        <div className="bg-cyan-900 flex justify-center">
+      <div className="bg-slate-800 flex flex-col text-slate-50">
+        <div className="bg-slate-900 flex justify-center">
           <h1 className="text-3xl font-bold underline center">PokeGo!</h1>
         </div>
-        <div className="bg-cyan-900 flex justify-center text-slate-50">
+        <div className="bg-slate-900 flex justify-center text-slate-50">
           <h1 className="text-lg font-bold center">TODO: Nav bar</h1>
         </div>
+
         <SearchBar
           onSearch={handleOnSearch}
           onSelect={handleOnSelect}
           items={pokemonResources}
         />
-        <PokemonTiles pokemon={pokemon} />
+
+        {/* {activePokemon.length > 0 ? (
+          <ActivePokemon pokemon={activePokemon} />
+        ) : null} */}
+
+        {activePokemon.length > 0 ? (
+          <ActivePokemon pok={activePokemon[0]} natures={natures} />
+        ) : null}
+
+        <PokemonTiles
+          pokemon={pokemon}
+          pokemonTileClicked={pokemonTileClicked}
+        />
       </div>
     </>
   );
