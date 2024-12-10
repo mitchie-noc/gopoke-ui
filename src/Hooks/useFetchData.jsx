@@ -21,7 +21,7 @@ const useFetchData = (url) => {
         setLoading(false); // Ensure loading is set to false
       }
     };
-
+    console.log("Fetch", url);
     fetchData();
   }, [url]); // Dependency array includes the URL
 

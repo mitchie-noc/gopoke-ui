@@ -42,7 +42,7 @@ export default function ActivePokemonNature({
   };
 
   return (
-    <div className="border border-solid font-mono text-3m h-full flex flex-col">
+    <div className="font-mono text-3m h-full flex flex-col">
       <div className="border border-solid p-1 text-center bg-slate-900 flex items-center justify-center flex-1">
         Nature
       </div>
