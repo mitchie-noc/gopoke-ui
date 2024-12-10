@@ -8,6 +8,7 @@ export default function PokemonTile({
   sprite,
   types,
   pokemonTileClicked,
+  className,
 }) {
   const colorMap = {
     grass: "bg-green-400",
@@ -39,7 +40,7 @@ export default function PokemonTile({
   return (
     <div
       onClick={(event) => pokemonTileClicked(event, pokemon)}
-      className="border border-solid border-2 border-slate-50 rounded-md mx-3 flex flex-col basis-1/3 sm:basis-1/6 items-center justify-between w-full m-3 flex-1 bg-cyan-100"
+      className={className}
     >
       <div className=" rounded-t-md bg-slate-900 w-full">
         <p className="font-mono font-bold text-3l text-center p-2 text-slate-50">

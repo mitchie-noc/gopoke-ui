@@ -33,6 +33,17 @@ export default function ActivePokemonAbility({
       <div className="p-1 text-center">
         <Select
           options={generateOptions()}
+          value={
+            activeAbility.Name
+              ? {
+                  value: activeAbility.Name,
+                  label: activeAbility.Name,
+                }
+              : {
+                  value: "Select...",
+                  label: "Select...",
+                }
+          }
           className="basic-single"
           styles={customStyles}
           onChange={onAbilitySelected}

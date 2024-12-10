@@ -42,19 +42,32 @@ export default function ActivePokemonNature({
   };
 
   return (
-    <div className="border border-solid font-mono text-3m">
-      <div className="border border-solid p-1 text-center bg-slate-900">
+    <div className="border border-solid font-mono text-3m h-full flex flex-col">
+      <div className="border border-solid p-1 text-center bg-slate-900 flex items-center justify-center flex-1">
         Nature
       </div>
-      <div className="p-1 text-center">
+
+      <div className="p-1 flex-1 text-center bg-slate-800">
         <Select
           options={generateOptions()}
           className="basic-single"
           styles={customStyles}
           onChange={handleNatureChange}
+          value={
+            nature.Name
+              ? {
+                  value: nature.Name,
+                  label: nature.Name,
+                }
+              : {
+                  value: "Select...",
+                  label: "Select...",
+                }
+          }
         />
       </div>
-      <div className="flex flex-row">
+
+      <div className="flex flex-row flex-1">
         <div className="p-1 flex-1 text-center bg-green-700 flex items-center justify-center">
           <div>
             {nature?.Increased_Stat ? statShorthand[nature.Increased_Stat] : ""}
