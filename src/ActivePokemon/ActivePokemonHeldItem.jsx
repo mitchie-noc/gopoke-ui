@@ -17,8 +17,6 @@ export default function ActivePokemonHeldItem({
     }),
   };
 
-  console.log(items);
-
   const generateOptions = () => {
     return items.map((item) => ({
       value: item.name,
@@ -26,9 +24,7 @@ export default function ActivePokemonHeldItem({
     }));
   };
 
-  const activeItemText = activeItem.ShortEffect
-    ? activeItem.ShortEffect.split(".")[0]
-    : null;
+  const activeItemText = activeItem.ShortEffect ? activeItem.ShortEffect : null;
 
   return (
     <div className="font-mono text-3m h-full flex flex-col">
@@ -55,9 +51,7 @@ export default function ActivePokemonHeldItem({
         />
       </div>
       <div className="flex-1 flex items-center justify-center bg-slate-800">
-        <div className="p-1 flex-1 text-center bg-slate-800 flex items-center justify-center">
-          {activeItemText}
-        </div>
+        <div className="text-center">{activeItemText}</div>
       </div>
     </div>
   );
