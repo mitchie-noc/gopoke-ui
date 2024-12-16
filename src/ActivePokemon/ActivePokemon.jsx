@@ -95,7 +95,6 @@ export default function ActivePokemon({ pok, natures, items }) {
       }
 
       const itemDetails = await response.json();
-      console.log(itemDetails);
 
       // Update the activeItem state with the API response
       setActiveItem(itemDetails);
@@ -104,7 +103,7 @@ export default function ActivePokemon({ pok, natures, items }) {
       alert("Failed to fetch item details. Please try again.");
     }
   };
-  console.log(items);
+
   return (
     <div className="flex flex-col sm:flex-row sm:space-x-4 bg-slate-700 w-full p-5 sm:p-10">
       <ActivePokemonSummary
