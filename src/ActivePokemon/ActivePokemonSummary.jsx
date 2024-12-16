@@ -16,10 +16,13 @@ export default function ActivePokemonSummary({
   activeItem,
 }) {
   return (
-    <div className="sm:w-1/3 w-full flex flex-col items-center sm:items-start">
-      <div className="w-full flex flex-col items-center sm:items-start border border-solid rounded-md">
-        <div className="grid grid-cols-2 gap-1 border border-solid rounded-md w-full">
-          <div className="flex justify-center items-center w-full h-full min-h-[150px]">
+    <div
+      className={`sm:w-1/3 w-full h-full flex flex-col items-center sm:items-start`}
+    >
+      <div className="w-full flex flex-col items-center sm:items-start border border-solid rounded-md h-full">
+        <div className="grid grid-cols-2 gap-1 border border-solid rounded-md w-full h-full">
+          {/* PokemonTile */}
+          <div className="flex justify-center items-center w-full h-full">
             <PokemonTile
               name={pokemon.Name}
               sprite={pokemon.Sprite}
@@ -29,7 +32,8 @@ export default function ActivePokemonSummary({
             />
           </div>
 
-          <div className="w-full h-full min-h-[150px]">
+          {/* ActivePokemonNature */}
+          <div className="w-full h-full">
             <ActivePokemonNature
               natures={natures}
               nature={nature}
@@ -37,7 +41,8 @@ export default function ActivePokemonSummary({
             />
           </div>
 
-          <div className="w-full h-full min-h-[150px]">
+          {/* ActivePokemonHeldItem */}
+          <div className="w-full h-full">
             <ActivePokemonHeldItem
               items={items}
               onItemSelected={onItemSelected}
@@ -45,7 +50,8 @@ export default function ActivePokemonSummary({
             />
           </div>
 
-          <div className="w-full h-full min-h-[150px]">
+          {/* ActivePokemonAbility */}
+          <div className="w-full h-full">
             <ActivePokemonAbility
               abilities={pokemon.Abilities}
               onAbilitySelected={onAbilitySelected}
@@ -54,8 +60,6 @@ export default function ActivePokemonSummary({
           </div>
         </div>
       </div>
-
-      {/* <div>Junk</div> */}
     </div>
   );
 }

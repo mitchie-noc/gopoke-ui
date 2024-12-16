@@ -105,7 +105,8 @@ export default function ActivePokemon({ pok, natures, items }) {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:space-x-4 bg-slate-700 w-full p-5 sm:p-10">
+    <div className="flex flex-col sm:flex-row sm:space-x-4 bg-slate-700 w-full p-5 sm:p-10 sm:h-[50vh] h-auto">
+      {/* Active Pokemon Summary */}
       <ActivePokemonSummary
         pokemon={pok}
         nature={activeNature}
@@ -116,9 +117,11 @@ export default function ActivePokemon({ pok, natures, items }) {
         items={items.items}
         onItemSelected={onItemSelected}
         activeItem={activeItem}
+        className="sm:w-1/3 w-full h-full"
       />
 
-      <div className="sm:w-2/3 w-full sm:mt-0 mt-4">
+      {/* Pokemon Stat View */}
+      <div className="sm:w-2/3 w-full sm:mt-0 mt-4 h-full">
         <PokemonStatView
           level={pokemonLevel}
           pokemonLevel={pokemonLevel}
@@ -134,6 +137,7 @@ export default function ActivePokemon({ pok, natures, items }) {
             onPokemonBattleStatEvChange(event, value, "iv")
           }
           onStatClicked={onStatClicked}
+          className="h-full flex flex-col"
         />
       </div>
     </div>

@@ -8,7 +8,9 @@ export default function StatRadar({
   pokemonLevel,
 }) {
   const statLables = stats.map((stat) =>
-    stat.Name.replace("special-", "Sp.").replace("defense", "def")
+    stat.Name.replace("special-", "Sp.")
+      .replace("defense", "def")
+      .replace("attack", "att")
   );
 
   const statValues = stats.map((stat) => {
@@ -76,7 +78,7 @@ export default function StatRadar({
         series={x.series}
         type="radar"
         height={390}
-        width={400}
+        width={320}
       />
     </div>
   );
