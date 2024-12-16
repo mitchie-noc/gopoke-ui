@@ -11,6 +11,9 @@ export default function ActivePokemonSummary({
   onNatureSelected,
   onAbilitySelected,
   activeAbility,
+  items,
+  onItemSelected,
+  activeItem,
 }) {
   return (
     <div className="sm:w-1/3 w-full flex flex-col items-center sm:items-start">
@@ -35,7 +38,11 @@ export default function ActivePokemonSummary({
           </div>
 
           <div className="w-full h-full min-h-[150px]">
-            <ActivePokemonHeldItem />
+            <ActivePokemonHeldItem
+              items={items}
+              onItemSelected={onItemSelected}
+              activeItem={activeItem}
+            />
           </div>
 
           <div className="w-full h-full min-h-[150px]">
@@ -48,7 +55,7 @@ export default function ActivePokemonSummary({
         </div>
       </div>
 
-      <div>Junk</div>
+      {/* <div>Junk</div> */}
     </div>
   );
 }

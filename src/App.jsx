@@ -24,6 +24,9 @@ function App() {
   const { data: natures, nl, ne } = useFetchData(
     "http://localhost:8080/api/v1/nature"
   );
+  const { data: items, itemLoading, itemError } = useFetchData(
+    "http://localhost:8080/api/v1/item?category=held-items"
+  );
 
   const handleOnSearch = (term) => {
     const fetchData = async () => {
@@ -86,12 +89,12 @@ function App() {
           items={pokemonResources}
         />
 
-        {/* {activePokemon.length > 0 ? (
-          <ActivePokemon pokemon={activePokemon} />
-        ) : null} */}
-
         {activePokemon.length > 0 ? (
-          <ActivePokemon pok={activePokemon[0]} natures={natures} />
+          <ActivePokemon
+            pok={activePokemon[0]}
+            natures={natures}
+            items={items}
+          />
         ) : null}
 
         <PokemonTiles

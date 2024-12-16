@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import useFetchData from "../Hooks/useFetchData";
 import ActivePokemonSummary from "./ActivePokemonSummary";
 import PokemonStatView from "../Controls/PokemonStatView";
 import "../index.css";
 
-export default function ActivePokemon({ pok, natures }) {
+export default function ActivePokemon({ pok, natures, items }) {
   const [activeNature, setActiveNature] = useState({});
   const [activeAbility, setActiveAbility] = useState({});
+  const [activeItem, setActiveItem] = useState({});
   const [pokemonLevel, setPokemonLevel] = useState(50);
   const [pokemonStatTraining, setPokemonStatTraining] = useState([]);
 
@@ -21,6 +23,7 @@ export default function ActivePokemon({ pok, natures }) {
     ]);
     setActiveNature({});
     setActiveAbility({});
+    setActiveItem({});
     setPokemonLevel(50);
   }, [pok]); // This ensures the state resets whenever the 'pok' prop changes
 
@@ -77,8 +80,28 @@ export default function ActivePokemon({ pok, natures }) {
     const activeAbility = pok.Abilities.find(
       (ability) => ability.Name === x.value
     );
-    console.log(activeAbility);
     setActiveAbility(activeAbility);
+  };
+
+  const onItemSelected = async (selectedItem) => {
+    try {
+      // Make an API call to fetch details for the selected item
+      const response = await fetch(
+        `http://localhost:8080/api/v1/item/${selectedItem.value}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch item details: ${response.statusText}`);
+      }
+
+      const itemDetails = await response.json();
+
+      // Update the activeItem state with the API response
+      setActiveItem(itemDetails);
+    } catch (error) {
+      console.error("Error fetching item details:", error);
+      alert("Failed to fetch item details. Please try again.");
+    }
   };
 
   return (
@@ -90,6 +113,9 @@ export default function ActivePokemon({ pok, natures }) {
         onNatureSelected={onNatureSelected}
         onAbilitySelected={onAbilitySelected}
         activeAbility={activeAbility}
+        items={items.items}
+        onItemSelected={onItemSelected}
+        activeItem={activeItem}
       />
 
       <div className="sm:w-2/3 w-full sm:mt-0 mt-4">
