@@ -15,23 +15,23 @@ export default function StatRadar({
 
   const statValues = stats.map((stat) => {
     const training = pokemonStatTraining.find((t) => t.name === stat.Name);
-    const iv = training ? training.iv : 0; // Default to 0 if not found
-    const ev = training ? training.ev : 0; // Default to 0 if not found
-    const nature = training ? training.nature : 0; // Default to 0 if not found
-    const isHP = stat.Name.toLowerCase() === "hp"; // Check if it's HP
+    const iv = training ? training.iv : 0;
+    const ev = training ? training.ev : 0;
+    const nature = training ? training.nature : 0;
+    const isHP = stat.Name.toLowerCase() === "hp";
     return calculateStat(stat.Base, iv, ev, pokemonLevel, nature, isHP);
   });
 
   const series1Data = stats.map((stat) => {
     const levelScale = pokemonLevel + 2;
     const level = levelScale > 100 ? 100 : levelScale;
-    const isHP = stat.Name.toLowerCase() === "hp"; // Check if it's HP
+    const isHP = stat.Name.toLowerCase() === "hp";
     return calculateStat(stat.Base, 31, 252, level, 1.1, isHP);
   });
 
-  const maxValue = Math.max(...series1Data); // Calculate the maximum value in series1Data
+  const maxValue = Math.max(...series1Data);
 
-  const x = {
+  const chartProps = {
     options: {
       labels: statLables,
       yaxis: {
@@ -41,25 +41,25 @@ export default function StatRadar({
         tickAmount: 3,
         labels: {
           style: {
-            fontSize: "20px", // Increase the font size for axis labels
-            fontWeight: "bold", // Optional: Make the font weight bold
+            fontSize: "20px",
+            fontWeight: "bold",
           },
         },
       },
       xaxis: {
-        categories: statLables, // Axis labels for the radar chart
+        categories: statLables,
         labels: {
           style: {
-            fontSize: "11px", // Increase font size
+            fontSize: "11px",
           },
         },
       },
       dataLabels: {
         enabled: true,
         style: {
-          fontSize: "14px", // Increase the font size of the values inside the radar chart
-          fontWeight: "bold", // Optionally, change the font weight
-          colors: ["#008FFB"], // Adjust text color if needed
+          fontSize: "14px",
+          fontWeight: "bold",
+          colors: ["#008FFB"],
         },
       },
     },
@@ -74,8 +74,8 @@ export default function StatRadar({
   return (
     <div className="">
       <Chart
-        options={x.options}
-        series={x.series}
+        options={chartProps.options}
+        series={chartProps.series}
         type="radar"
         height={390}
         width={320}
