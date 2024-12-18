@@ -91,7 +91,7 @@ function App() {
 
         {activePokemon.length > 0 ? (
           <ActivePokemon
-            pok={activePokemon[0]}
+            pokemon={activePokemon[0]}
             natures={natures}
             items={items}
           />

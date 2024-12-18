@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React from "react";
 import Select from "react-select";
 
 export default function ActivePokemonAbility({
@@ -9,11 +9,11 @@ export default function ActivePokemonAbility({
   const customStyles = {
     singleValue: (provided) => ({
       ...provided,
-      color: "black", // Color of the selected value text
+      color: "black",
     }),
     option: (provided, state) => ({
       ...provided,
-      color: state.isSelected ? "white" : "black", // Example: white for selected, black otherwise
+      color: state.isSelected ? "white" : "black",
     }),
   };
 

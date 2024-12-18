@@ -2,7 +2,7 @@ import PokemonTile from "./PokemonTile";
 
 export default function PokemonTiles({ pokemon, pokemonTileClicked }) {
   return (
-    <div className="flex flex-row w-100 bg-slate-700 flex-wrap">
+    <div className="flex flex-row w-100 bg-slate-700 flex-wrap py-1">
       {pokemon.map((pok) => (
         <PokemonTile
           pokemon={pok}
