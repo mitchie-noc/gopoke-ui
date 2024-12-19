@@ -77,7 +77,7 @@ export default function StatRadar({
         options={chartProps.options}
         series={chartProps.series}
         type="radar"
-        height={390}
+        height={380}
         width={320}
       />
     </div>

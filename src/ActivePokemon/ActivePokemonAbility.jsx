@@ -46,7 +46,7 @@ export default function ActivePokemonAbility({
           }
           className="basic-single"
           styles={customStyles}
-          onChange={onAbilitySelected}
+          onChange={(selected) => onAbilitySelected(selected, abilities)}
         />
       </div>
 

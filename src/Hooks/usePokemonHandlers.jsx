@@ -1,5 +1,4 @@
 export default function usePokemonHandlers(
-  pokemon,
   setPokemonLevel,
   setPokemonStatTraining,
   setActiveNature,
@@ -43,8 +42,8 @@ export default function usePokemonHandlers(
     );
   };
 
-  const onAbilitySelected = (selected) => {
-    const activeAbility = pokemon.Abilities.find(
+  const onAbilitySelected = (selected, abilities) => {
+    const activeAbility = abilities.find(
       (ability) => ability.Name === selected.value
     );
     setActiveAbility(activeAbility);
@@ -52,7 +51,6 @@ export default function usePokemonHandlers(
 
   const onItemSelected = async (selectedItem) => {
     try {
-      // Make an API call to fetch details for the selected item
       const response = await fetch(
         `http://localhost:8080/api/v1/item/${selectedItem.value}`
       );
@@ -63,7 +61,6 @@ export default function usePokemonHandlers(
 
       const itemDetails = await response.json();
 
-      // Update the activeItem state with the API response
       setActiveItem(itemDetails);
     } catch (error) {
       console.error("Error fetching item details:", error);

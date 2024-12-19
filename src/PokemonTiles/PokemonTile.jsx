@@ -1,5 +1,5 @@
 import React from "react";
-
+import PokemonTypeTyle from "../PokemonTypes/PokemonTypeTile";
 import "../index.css";
 
 export default function PokemonTile({
@@ -10,31 +10,8 @@ export default function PokemonTile({
   pokemonTileClicked,
   className,
 }) {
-  const colorMap = {
-    grass: "bg-green-400",
-    poison: "bg-violet-400",
-    fire: "bg-red-400",
-    flying: "bg-sky-400",
-    water: "bg-blue-400",
-    bug: "bg-lime-500",
-    normal: "bg-slate-400",
-    electric: "bg-yellow-400",
-    dragon: "bg-blue-700",
-    ice: "bg-cyan-500",
-    ground: "bg-amber-800",
-    rock: "bg-stone-500",
-    psychic: "bg-red-300",
-    ghost: "bg-violet-900",
-  };
-
-  const baseTypeClass = "font-mono text-3m text-center p-1 w-full font-bold ";
   let pokemonType = types.map((type) => (
-    <p
-      className={baseTypeClass + colorMap[type.Name] || "bg-slat-50"}
-      key={type.Name}
-    >
-      {type.Name.toUpperCase()}
-    </p>
+    <PokemonTypeTyle type={type.Name} key={type.Name} width="w-full" />
   ));
 
   return (
