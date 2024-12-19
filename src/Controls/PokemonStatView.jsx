@@ -4,16 +4,13 @@ import StatControls from "../Controls/StatContols";
 import Slider from "@mui/material/Slider";
 
 export default function PokemonStatView({
-  pokemonLevel,
-  stats,
-  statTraining,
+  pokemon,
   onStatClicked,
-  level,
   onLevelSliderChange,
   onBattleStatEvChange,
   onBattleStatIvChange,
 }) {
-  const levelToRender = level > 0 ? level : 50;
+  const levelToRender = pokemon.pokemonLevel > 0 ? pokemon.pokemonLevel : 50;
 
   return (
     <div className="h-full flex flex-col border border-solid rounded-md m-2">
@@ -22,9 +19,9 @@ export default function PokemonStatView({
         {/* StatRadar section */}
         <div className="border border-solid rounded-md overflow-hidden flex flex-1 justify-center items-center bg-slate-900 h-full">
           <StatRadar
-            pokemonLevel={pokemonLevel}
-            stats={stats}
-            pokemonStatTraining={statTraining}
+            pokemonLevel={pokemon.pokemonLevel}
+            stats={pokemon.Stats}
+            pokemonStatTraining={pokemon.pokemonStatTraining}
           />
         </div>
 
@@ -49,7 +46,7 @@ export default function PokemonStatView({
               />
             </div>
             <StatControls
-              statTraining={statTraining}
+              statTraining={pokemon.pokemonStatTraining}
               onBattleStatEvChange={onBattleStatEvChange}
               onBattleStatIvChange={onBattleStatIvChange}
               onStatClicked={onStatClicked}

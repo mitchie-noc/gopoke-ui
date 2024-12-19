@@ -1,52 +1,65 @@
-export default function usePokemonHandlers(
-  setPokemonLevel,
-  setPokemonStatTraining,
-  setActiveNature,
-  setActiveAbility,
-  setActiveItem
-) {
+export default function usePokemonHandlers(setPokemon) {
   const onPokemonLevelChange = (event, value, statName) => {
-    setPokemonLevel(value);
+    setPokemon((pokemon) => {
+      return {
+        ...pokemon,
+        pokemonLevel: value,
+      };
+    });
   };
 
   const onPokemonBattleStatChange = (event, value, toChange) => {
-    setPokemonStatTraining((prevStats) =>
-      prevStats.map((stat) =>
-        stat.active ? { ...stat, [toChange]: value } : stat
-      )
-    );
+    setPokemon((pokemon) => {
+      return {
+        ...pokemon,
+        pokemonStatTraining: pokemon.pokemonStatTraining.map((stat) =>
+          stat.active ? { ...stat, [toChange]: value } : stat
+        ),
+      };
+    });
   };
 
   const onStatClicked = (event) => {
     const statName = event.target.innerText;
-    setPokemonStatTraining((prevStats) =>
-      prevStats.map((stat) => ({
-        ...stat,
-        active: stat.name === statName,
-      }))
-    );
+    setPokemon((pokemon) => {
+      return {
+        ...pokemon,
+        pokemonStatTraining: pokemon.pokemonStatTraining.map((stat) => ({
+          ...stat,
+          active: stat.name === statName,
+        })),
+      };
+    });
   };
 
   const onNatureSelected = (selectedNature) => {
-    setActiveNature(selectedNature);
-    setPokemonStatTraining((prevStats) =>
-      prevStats.map((stat) => {
-        if (stat.name === selectedNature.Increased_Stat) {
-          return { ...stat, nature: 1.1 };
-        } else if (stat.name === selectedNature.Decreased_Stat) {
-          return { ...stat, nature: 0.9 };
-        } else {
-          return { ...stat, nature: 1.0 };
-        }
-      })
-    );
+    setPokemon((pokemon) => {
+      return {
+        ...pokemon,
+        activeNature: selectedNature,
+        pokemonStatTraining: pokemon.pokemonStatTraining.map((stat) => {
+          if (stat.name === selectedNature.Increased_Stat) {
+            return { ...stat, nature: 1.1 };
+          } else if (stat.name === selectedNature.Decreased_Stat) {
+            return { ...stat, nature: 0.9 };
+          } else {
+            return { ...stat, nature: 1.0 };
+          }
+        }),
+      };
+    });
   };
 
   const onAbilitySelected = (selected, abilities) => {
     const activeAbility = abilities.find(
       (ability) => ability.Name === selected.value
     );
-    setActiveAbility(activeAbility);
+    setPokemon((pokemon) => {
+      return {
+        ...pokemon,
+        activeAbility: activeAbility,
+      };
+    });
   };
 
   const onItemSelected = async (selectedItem) => {
@@ -61,7 +74,12 @@ export default function usePokemonHandlers(
 
       const itemDetails = await response.json();
 
-      setActiveItem(itemDetails);
+      setPokemon((pokemon) => {
+        return {
+          ...pokemon,
+          activeItem: itemDetails,
+        };
+      });
     } catch (error) {
       console.error("Error fetching item details:", error);
       alert("Failed to fetch item details. Please try again.");

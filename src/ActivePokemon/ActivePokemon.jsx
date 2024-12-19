@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import useActivePokemonState from "../Hooks/useActivePokemonState";
 import usePokemonHandlers from "../Hooks/usePokemonHandlers";
 import ViewSelector from "../Controls/ViewSelector";
 import ActivePokemonSummary from "./ActivePokemonSummary";
@@ -7,39 +6,15 @@ import PokemonStatView from "../Controls/PokemonStatView";
 import PokemonTypeMatch from "../TypeMatchup/PokemonTypeMatch";
 import "../index.css";
 
-export default function ActivePokemon({ pokemon, natures, items }) {
-  const {
-    activeNature,
-    setActiveNature,
-    activeAbility,
-    setActiveAbility,
-    activeItem,
-    setActiveItem,
-    pokemonLevel,
-    setPokemonLevel,
-    pokemonStatTraining,
-    setPokemonStatTraining,
-  } = useActivePokemonState(pokemon);
-
-  const handlers = usePokemonHandlers(
-    setPokemonLevel,
-    setPokemonStatTraining,
-    setActiveNature,
-    setActiveAbility,
-    setActiveItem
-  );
-
+export default function ActivePokemon({ pokemon, setPokemon, natures, items }) {
+  const handlers = usePokemonHandlers(setPokemon);
   const [activeView, setActiveView] = useState("Stats");
 
-  // Memoize view components
   const viewComponents = useMemo(
     () => ({
       Stats: (
         <PokemonStatView
-          level={pokemonLevel}
-          pokemonLevel={pokemonLevel}
-          stats={pokemon.Stats}
-          statTraining={pokemonStatTraining}
+          pokemon={pokemon}
           onLevelSliderChange={(event, value) =>
             handlers.onPokemonLevelChange(event, value, "hp")
           }
@@ -58,36 +33,16 @@ export default function ActivePokemon({ pokemon, natures, items }) {
     [pokemon]
   );
 
-  // Only sort the stats when pokemon changes, do not reset activeView
-  //   useEffect(() => {
-  //     pokemon.Stats.sort((a, b) => {
-  //       const customOrder = [
-  //         "hp",
-  //         "attack",
-  //         "defense",
-  //         "speed",
-  //         "special-defense",
-  //         "special-attack",
-  //       ];
-  //       return customOrder.indexOf(a.Name) - customOrder.indexOf(b.Name);
-  //     });
-  //   }, [pokemon]);
-
   const onViewSelect = (viewName) => {
-    setActiveView(viewName); // Set activeView directly without interference
+    setActiveView(viewName);
   };
 
   return (
     <div className="flex flex-col sm:flex-row sm:space-x-4 bg-slate-700 w-full p-5 sm:p-10 sm:h-[50vh] h-auto">
       <ActivePokemonSummary
-        pokemonData={{
-          pokemon,
-          nature: activeNature,
-          natures,
-          activeAbility,
-          items: items.items,
-          activeItem,
-        }}
+        pokemon={pokemon}
+        natures={natures}
+        items={items.items}
         handlers={{
           onNatureSelected: handlers.onNatureSelected,
           onAbilitySelected: handlers.onAbilitySelected,

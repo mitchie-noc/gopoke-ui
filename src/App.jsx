@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useFetchPokemonList from "./Hooks/useFetchPokemonList";
 import useFetchPokemon from "./Hooks/useFetchPokemon";
 import useFetchData from "./Hooks/useFetchData";
 import PokemonTiles from "./PokemonTiles/PokemonTiles";
@@ -11,12 +12,12 @@ function App() {
   const [activePokemonResource, setActivePokemonResources] = useState([]);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(25);
-  const { data: pokemon, loading, error } = useFetchPokemon(
+  const { data: pokemon, loading, error } = useFetchPokemonList(
     offset,
     limit,
     null
   );
-  const { data: activePokemon, l, e } = useFetchPokemon(
+  const { data: activePokemon, setData, l, e } = useFetchPokemon(
     null,
     null,
     activePokemonResource
@@ -65,6 +66,7 @@ function App() {
   };
 
   const pokemonTileClicked = (event, name) => {
+    console.log(name);
     setActivePokemonResources([
       {
         id: name.id,
@@ -89,9 +91,10 @@ function App() {
           items={pokemonResources}
         />
 
-        {activePokemon.length > 0 ? (
+        {activePokemon && !l ? (
           <ActivePokemon
-            pokemon={activePokemon[0]}
+            pokemon={activePokemon}
+            setPokemon={setData}
             natures={natures}
             items={items}
           />
