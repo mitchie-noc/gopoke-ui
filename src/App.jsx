@@ -18,8 +18,6 @@ function App() {
     null
   );
   const { data: activePokemon, setData, l, e } = useFetchPokemon(
-    null,
-    null,
     activePokemonResource
   );
   const { data: natures, nl, ne } = useFetchData(

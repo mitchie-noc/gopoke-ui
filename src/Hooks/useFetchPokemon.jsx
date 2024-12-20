@@ -1,40 +1,21 @@
 import { useState, useEffect } from "react";
 
-const useFetchPokemon = (offset, limit, initialResponse = null) => {
-  const [data, setData] = useState(null); // This will hold the single Pokémon
+const useFetchPokemon = (initialResponse = null) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let results = [];
-
-        // If no valid offset, limit, or initial response, stop early
-        if (offset === null && limit === null && initialResponse === null) {
+        if (initialResponse === null) {
           setLoading(false);
           setData(null);
           return;
         }
 
-        if (initialResponse) {
-          // Use initial response data if available
-          results = initialResponse;
-        } else {
-          // Fetch the list of Pokémon with offset and limit
-          const response = await fetch(
-            `http://localhost:8080/api/v1/pokemon?offset=${offset}&limit=${limit}`
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch the list of Pokémon");
-          }
-          const result = await response.json();
-          results = result.results;
-        }
-
-        // Fetch detailed data for each Pokémon
         const detailedResults = await Promise.all(
-          results.map(async (pokemon) => {
+          initialResponse.map(async (pokemon) => {
             const res = await fetch(
               `http://localhost:8080/api/v1/pokemon/${pokemon.name}`
             );
@@ -44,7 +25,6 @@ const useFetchPokemon = (offset, limit, initialResponse = null) => {
             const result = await res.json();
             result.id = pokemon.id;
 
-            // Sort the stats based on custom order
             const customOrder = [
               "hp",
               "attack",
@@ -88,8 +68,7 @@ const useFetchPokemon = (offset, limit, initialResponse = null) => {
           })
         );
 
-        // Return only the first Pokémon from the array
-        setData(detailedResults[0]); // Set only the first item of the array
+        setData(detailedResults[0]);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -98,7 +77,7 @@ const useFetchPokemon = (offset, limit, initialResponse = null) => {
     };
 
     fetchData();
-  }, [offset, limit, initialResponse]); // Re-run when offset, limit, or initialResponse changes
+  }, [initialResponse]); // Re-run when offset, limit, or initialResponse changes
 
   return { data, setData, loading, error }; // Return the single Pokémon object, loading, and error states
 };

@@ -14,9 +14,7 @@ export default function PokemonStatView({
 
   return (
     <div className="h-full flex flex-col border border-solid rounded-md m-2">
-      {/* Top section with StatRadar */}
       <div className="flex flex-col md:flex-row flex-1 max-w-full h-full">
-        {/* StatRadar section */}
         <div className="border border-solid rounded-md overflow-hidden flex flex-1 justify-center items-center bg-slate-900 h-full">
           <StatRadar
             pokemonLevel={pokemon.pokemonLevel}
@@ -25,7 +23,6 @@ export default function PokemonStatView({
           />
         </div>
 
-        {/* Stat Controls section */}
         <div className="flex flex-1 justify-center items-center p-10 bg-slate-800 h-full">
           <div className="w-full md:w-80 lg:w-96 mx-auto my-4 md:my-0 p-2 flex-shrink-0">
             <div>
